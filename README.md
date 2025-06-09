@@ -12,7 +12,6 @@ miniproject/
 │   ├── train.csv
 │   ├── test.csv
 │   └── sample_submission.csv
-├── final.ipynb         # 원본 Jupyter 노트북
 └── README.md           # 프로젝트 설명서
 ```
 
