@@ -29,7 +29,47 @@ miniproject/
 
 3. **예상 출력**
    ```
-   Stacking Ensemble ROC-AUC: 0.6247
+   --- Individual Base Model Performance ---
+
+   1. LightGBM Classifier:
+   
+                 precision    recall  f1-score   support
+   
+              0     0.XXXX    0.XXXX    0.XXXX      YYYY
+              1     0.XXXX    0.XXXX    0.XXXX      YYYY
+   
+       accuracy                         0.XXXX      ZZZZ
+      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   
+   
+   2. XGBoost Classifier:
+   
+                 precision    recall  f1-score   support
+   
+              0     0.XXXX    0.XXXX    0.XXXX      YYYY
+              1     0.XXXX    0.XXXX    0.XXXX      YYYY
+   
+       accuracy                         0.XXXX      ZZZZ
+      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   
+   
+   3. CatBoost Classifier:
+   
+                 precision    recall  f1-score   support
+   
+              0     0.XXXX    0.XXXX    0.XXXX      YYYY
+              1     0.XXXX    0.XXXX    0.XXXX      YYYY
+   
+       accuracy                         0.XXXX      ZZZZ
+      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
+   
+   ------------------------------------------
+   
+   Stacking Ensemble ROC-AUC: 0.XXXX
+   Stacking Ensemble Accuracy: 0.XXXX
    제출 파일이 생성되었습니다: submission.csv
    ```
 
