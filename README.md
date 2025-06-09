@@ -1,5 +1,50 @@
 # 💳 채무 불이행 여부 예측: 불이행의 징후를 찾아라!
 
+## 📁 프로젝트 구조
+
+```
+miniproject/
+├── main.py              # 메인 실행 파일 (스태킹 앙상블)
+├── model_rf.py          # Random Forest 모델 클래스
+├── model_lr.py          # Logistic Regression 모델 클래스
+├── requirements.txt     # 필요한 패키지 목록
+├── data/               # 데이터 파일들
+│   ├── train.csv
+│   ├── test.csv
+│   └── sample_submission.csv
+├── final.ipynb         # 원본 Jupyter 노트북
+└── README.md           # 프로젝트 설명서
+```
+
+## 🚀 실행 방법
+
+1. **환경 설정**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **모델 실행**
+   ```bash
+   python main.py
+   ```
+
+3. **예상 출력**
+   ```
+   Stacking Ensemble ROC-AUC: 0.6247
+   제출 파일이 생성되었습니다: submission.csv
+   ```
+
+## 📊 모델 아키텍처
+
+### 스태킹 앙상블 구성
+- **Base Learners**: LightGBM, XGBoost, CatBoost, Random Forest, Logistic Regression
+- **Meta Learner**: Logistic Regression
+- **특징**: Passthrough 활성화로 원본 특성 보존
+
+### 개별 모델 파일
+- **`model_rf.py`**: Random Forest 모델 클래스 (특성 중요도 분석 포함)
+- **`model_lr.py`**: Logistic Regression 모델 클래스 (스케일링 자동 처리)
+
 ## 배경
 채무 불이행은 금융 기관과 개인 모두에게 큰 영향을 미치며, 경제 시스템에 부담 UP
 <br>효과적으로 채무 불이행 여부를 예측할 수 있는 기술은 금융 안정성을 높이고, 금융 서비스 제공자와 고객 간의 신뢰를 강화하는 데 큰 기여하기
@@ -30,7 +75,7 @@
 수치형 변수:
 - 중앙값 대체 이유:
     - 로버스트 통계량으로 극단값 영향 최소화
-    - `신용 점수` 등의 변수에서 Skewness 관찰
+    - `신용 점수` 등의 변수에서 Skewness 관찰
 범주형 변수:
 - 'Unknown'처리 장점:
     - 신규 범주 출현시 대응 가능
@@ -56,7 +101,7 @@ graph LR
 
 **적용 세부사항**:
 
-- **k_neighbors=5** (기본값) 유지: 과도한 샘플링 방지
+- **k_neighbors=5** (기본값) 유지: 과도한 샘플링 방지
 - **분할 전 적용**: 검증 세트에 정보 누수 방지
 - **성능 비교**: SMOTE vs ADASYN vs BorderlineSMOTE 실험 계획
 
@@ -148,8 +193,8 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 
 #### 2. 심층 특성 공학
 
-- **상호작용 항**: `신용 점수 × 연체 리스크`
-- **비선형 변환**: `log(연간 소득 + 1)`
+- **상호작용 항**: `신용 점수 × 연체 리스크`
+- **비선형 변환**: `log(연간 소득 + 1)`
 - **시간 가중치**: 최근 6개월 데이터 강조
 
 #### 3. 모델 확장
@@ -161,7 +206,7 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 
 ## 결론
 
-본 프로젝트는 **스태킹 앙상블**을 중심으로 한 종합적 신용위험 모델링 프레임워크를 제시했습니다. 데이터 전처리 단계에서 도메인 지식을 반영한 파생변수 생성, SMOTE를 활용한 불균형 대응, 다양한 트리 모델의 예측력을 결합한 앙상블 기법이 핵심 성공 요인입니다. 향후 하이퍼파라미터 튜닝과 심층적 특성 분석을 통해 AUC 0.9+ 달성이 기대됩니다.
+본 프로젝트는 **스태킹 앙상블**을 중심으로 한 종합적 신용위험 모델링 프레임워크를 제시했습니다. 데이터 전처리 단계에서 도메인 지식을 반영한 파생변수 생성, SMOTE를 활용한 불균형 대응, 다양한 트리 모델의 예측력을 결합한 앙상블 기법이 핵심 성공 요인입니다. 향후 하이퍼파라미터 튜닝과 심층적 특성 분석을 통해 AUC 0.9+ 달성이 기대됩니다.
 
 
 ### 📚 분석 및 시각화
