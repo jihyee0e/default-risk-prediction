@@ -27,52 +27,6 @@ miniproject/
    python main.py
    ```
 
-3. **예상 출력**
-   ```
-   --- Individual Base Model Performance ---
-
-   1. LightGBM Classifier:
-   
-                 precision    recall  f1-score   support
-   
-              0     0.XXXX    0.XXXX    0.XXXX      YYYY
-              1     0.XXXX    0.XXXX    0.XXXX      YYYY
-   
-       accuracy                         0.XXXX      ZZZZ
-      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   
-   
-   2. XGBoost Classifier:
-   
-                 precision    recall  f1-score   support
-   
-              0     0.XXXX    0.XXXX    0.XXXX      YYYY
-              1     0.XXXX    0.XXXX    0.XXXX      YYYY
-   
-       accuracy                         0.XXXX      ZZZZ
-      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   
-   
-   3. CatBoost Classifier:
-   
-                 precision    recall  f1-score   support
-   
-              0     0.XXXX    0.XXXX    0.XXXX      YYYY
-              1     0.XXXX    0.XXXX    0.XXXX      YYYY
-   
-       accuracy                         0.XXXX      ZZZZ
-      macro avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   weighted avg     0.XXXX    0.XXXX    0.XXXX      ZZZZ
-   
-   ------------------------------------------
-   
-   Stacking Ensemble ROC-AUC: 0.XXXX
-   Stacking Ensemble Accuracy: 0.XXXX
-   제출 파일이 생성되었습니다: submission.csv
-   ```
-
 ## 📊 모델 아키텍처
 
 ### 스태킹 앙상블 구성
@@ -85,8 +39,8 @@ miniproject/
 - **`model_lr.py`**: Logistic Regression 모델 클래스 (스케일링 자동 처리)
 
 ## 배경
-채무 불이행은 금융 기관과 개인 모두에게 큰 영향을 미치며, 경제 시스템에 부담 UP
-<br>효과적으로 채무 불이행 여부를 예측할 수 있는 기술은 금융 안정성을 높이고, 금융 서비스 제공자와 고객 간의 신뢰를 강화하는 데 큰 기여하기
+채무 불이행은 금융 기관과 개인 모두에게 큰 영향을 미치며 경제 시스템에 부담 UP
+<br>효과적으로 채무 불이행 여부를 예측할 수 있는 기술은 금융 안정성을 높이고 금융 서비스 제공자와 고객 간의 신뢰를 강화하는 데 큰 기여하기
 
 ## 주제
 채무 불이행 가능성을 예측하는 AI 알고리즘 개발 
@@ -281,13 +235,13 @@ X_train, X_valid, y_train, y_valid = train_test_split(
   "부채 비율", "신용 점수 대비 부채 비율", "연체 리스크 지표" 등 파생 변수를 생성하는 과정에서 분모가 0인 경우에 대비하지 않으면 오류가 발생할 수 있었습니다.
   
 - **범주형 변수 인코딩:**  
-  초기에는 LabelEncoder를 사용하여 범주형 변수를 숫자형으로 변환하였으나, 데이터의 복잡한 관계를 충분히 반영하지 못할 수 있어 이후 One-Hot 인코딩, Target Encoding, Frequency Encoding 등 다양한 기법을 실험했습니다.
+  초기에는 LabelEncoder를 사용하여 범주형 변수를 숫자형으로 변환하였으나 데이터의 복잡한 관계를 충분히 반영하지 못할 수 있어 이후 One-Hot 인코딩, Target Encoding, Frequency Encoding 등 다양한 기법을 실험했습니다.
   
 - **이상치 처리:**  
-  처음에는 1%~99% 분위수 기반 클리핑을 사용하였으나, IQR(Interquartile Range) 기반 이상치 처리를 도입해 극단치의 영향을 줄이려 시도했습니다.
+  처음에는 1%~99% 분위수 기반 클리핑을 사용하였으나 IQR(Interquartile Range) 기반 이상치 처리를 도입해 극단치의 영향을 줄이려 시도했습니다.
 
 #### 해결 및 개선 방안 ✅
-- 결측치와 무한대 값은 `replace()`와 중앙값 대체로 안정적으로 처리하였고, 파생 변수 생성 시 분모가 0인 경우 `np.nan`으로 처리하여 오류를 방지했습니다.
+- 결측치와 무한대 값은 `replace()`와 중앙값 대체로 안정적으로 처리하였고 파생 변수 생성 시 분모가 0인 경우 `np.nan`으로 처리하여 오류를 방지했습니다.
 - 범주형 변수는 'Unknown'으로 채운 후 LabelEncoder 또는 One-Hot 인코딩을 적용하여 모든 피처가 수치형으로 변환되도록 했습니다.
 - 이상치 처리는 IQR 기반 클리핑을 도입해 극단치로 인한 왜곡을 효과적으로 줄였습니다.
 
@@ -296,24 +250,24 @@ X_train, X_valid, y_train, y_valid = train_test_split(
 
 #### 문제점 ⚠️
 - **모델 복잡도와 오버피팅:**  
-  복잡한 스태킹 앙상블 모델(예: LightGBM, XGBoost, CatBoost 결합)을 사용했을 때, 학습 데이터에 과도하게 맞추어져 검증 및 테스트 데이터에서 과적합이 발생하여 점수가 낮아졌습니다.
+  복잡한 스태킹 앙상블 모델(예: LightGBM, XGBoost, CatBoost 결합)을 사용했을 때 학습 데이터에 과도하게 맞추어져 검증 및 테스트 데이터에서 과적합이 발생하여 점수가 낮아졌습니다.
   
 - **하이퍼파라미터 튜닝:**  
-  GridSearchCV와 Optuna 등 다양한 도구를 사용하여 하이퍼파라미터를 튜닝하려 했지만, 전처리 파이프라인과 모델 간의 상호작용으로 인해 최적의 조합을 찾기 어려웠습니다.
+  GridSearchCV와 Optuna 등 다양한 도구를 사용하여 하이퍼파라미터를 튜닝하려 했지만 전처리 파이프라인과 모델 간의 상호작용으로 인해 최적의 조합을 찾기 어려웠습니다.
 
 #### 해결 및 개선 방안 ✅
-- 모델 복잡도를 낮추기 위해 단일 결정트리나 랜덤 포레스트 모델과 같이 단순 모델로 전환하거나, 불필요한 피처를 제거 및 차원 축소(PCA, 상호작용 특성 등)를 적용하여 과적합을 줄였습니다.
-- GridSearchCV를 통해 결정트리와 랜덤 포레스트의 주요 하이퍼파라미터(max_depth, min_samples_split, min_samples_leaf 등)를 조정하고, 교차검증(cv=5)을 통해 모델의 일반화 성능을 평가했습니다.
+- 모델 복잡도를 낮추기 위해 단일 결정트리나 랜덤 포레스트 모델과 같이 단순 모델로 전환하거나 불필요한 피처를 제거 및 차원 축소(PCA, 상호작용 특성 등)를 적용하여 과적합을 줄였습니다.
+- GridSearchCV를 통해 결정트리와 랜덤 포레스트의 주요 하이퍼파라미터(max_depth, min_samples_split, min_samples_leaf 등)를 조정하고 교차검증(cv=5)을 통해 모델의 일반화 성능을 평가했습니다.
 - 예측 확률 캘리브레이션(Platt Scaling, Isotonic Regression) 기법을 추가로 검토 중입니다.
 
 #### 3. 클래스 불균형 및 SMOTE 적용 문제 ⚖️
 
 #### 문제점 ⚠️
 - **클래스 불균형:**  
-  데이터의 클래스 불균형 문제를 해결하기 위해 SMOTE를 적용했으나, 생성된 합성 데이터가 실제 데이터 분포와 차이가 있어 모델의 일반화 성능에 영향을 미칠 수 있었습니다.
+  데이터의 클래스 불균형 문제를 해결하기 위해 SMOTE를 적용했으나 생성된 합성 데이터가 실제 데이터 분포와 차이가 있어 모델의 일반화 성능에 영향을 미칠 수 있었습니다.
 
 #### 해결 및 개선 방안 ✅
-- SMOTE의 `sampling_strategy` 및 오버샘플링 비율을 조정하여, 합성 데이터가 원본 데이터 분포와 유사하게 유지되도록 노력했습니다.
+- SMOTE의 `sampling_strategy` 및 오버샘플링 비율을 조정하여 합성 데이터가 원본 데이터 분포와 유사하게 유지되도록 노력했습니다.
 - SMOTE 외에도 ADASYN 또는 언더샘플링 기법을 함께 실험하여 다양한 불균형 처리 방식을 평가했습니다.
 - 교차검증을 통해 SMOTE 적용 후 모델의 성능 안정성을 지속적으로 확인했습니다.
 
